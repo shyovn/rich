@@ -105,6 +105,12 @@ def test_render_overlap():
     ]
 
 
+def test_adjoint():
+    result = render("[red][blue]B[/blue]R[/red]")
+    print(repr(result))
+    assert result.spans == [Span(0, 2, "red"), Span(0, 1, "blue")]
+
+
 def test_render_close():
     result = render("[bold]X[/]Y")
     assert str(result) == "XY"
@@ -149,3 +155,17 @@ def test_escape_escape():
 
     result = render(r"\\\\")
     assert str(result) == r"\\\\"
+
+
+def test_events():
+
+    result = render("[@click]Hello[/@click] [@click='view.toggle', 'left']World[/]")
+    assert str(result) == "Hello World"
+
+
+def test_events_broken():
+    with pytest.raises(MarkupError):
+        render("[@click=sdfwer]foo[/]")
+
+    with pytest.raises(MarkupError):
+        render("[@click='view.toggle]foo[/]")

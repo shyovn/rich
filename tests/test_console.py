@@ -66,6 +66,7 @@ def test_truecolor_terminal():
 def test_console_options_update():
     options = ConsoleOptions(
         ConsoleDimensions(80, 25),
+        max_height=25,
         legacy_windows=False,
         min_width=10,
         max_width=20,
@@ -653,3 +654,24 @@ def test_print_width_zero():
     with console.capture() as capture:
         console.print("Hello", width=0)
     assert capture.get() == ""
+
+
+def test_size_properties():
+    console = Console(width=80, height=25)
+    assert console.size == ConsoleDimensions(80, 25)
+    console.size = (10, 20)
+    assert console.size == ConsoleDimensions(10, 20)
+    console.width = 5
+    assert console.size == ConsoleDimensions(5, 20)
+    console.height = 10
+    assert console.size == ConsoleDimensions(5, 10)
+
+
+def test_print_newline_start():
+    console = Console(width=80, height=25)
+    console.begin_capture()
+    console.print("Foo", new_line_start=True)
+    console.print("Foo\nbar\n", new_line_start=True)
+    result = console.end_capture()
+
+    assert result == "Foo\n\nFoo\nbar\n\n"

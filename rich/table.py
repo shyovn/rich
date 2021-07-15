@@ -151,10 +151,10 @@ class Table(JupyterMixin):
     def __init__(
         self,
         *headers: Union[Column, str],
-        title: TextType = None,
-        caption: TextType = None,
-        width: int = None,
-        min_width: int = None,
+        title: Optional[TextType] = None,
+        caption: Optional[TextType] = None,
+        width: Optional[int] = None,
+        min_width: Optional[int] = None,
         box: Optional[box.Box] = box.HEAVY_HEAD,
         safe_box: Optional[bool] = None,
         padding: PaddingDimensions = (0, 1),
@@ -167,12 +167,12 @@ class Table(JupyterMixin):
         show_lines: bool = False,
         leading: int = 0,
         style: StyleType = "none",
-        row_styles: Iterable[StyleType] = None,
+        row_styles: Optional[Iterable[StyleType]] = None,
         header_style: Optional[StyleType] = "table.header",
         footer_style: Optional[StyleType] = "table.footer",
-        border_style: StyleType = None,
-        title_style: StyleType = None,
-        caption_style: StyleType = None,
+        border_style: Optional[StyleType] = None,
+        title_style: Optional[StyleType] = None,
+        caption_style: Optional[StyleType] = None,
         title_justify: "JustifyMethod" = "center",
         caption_justify: "JustifyMethod" = "center",
         highlight: bool = False,
@@ -330,15 +330,15 @@ class Table(JupyterMixin):
         header: "RenderableType" = "",
         footer: "RenderableType" = "",
         *,
-        header_style: StyleType = None,
-        footer_style: StyleType = None,
-        style: StyleType = None,
+        header_style: Optional[StyleType] = None,
+        footer_style: Optional[StyleType] = None,
+        style: Optional[StyleType] = None,
         justify: "JustifyMethod" = "left",
         overflow: "OverflowMethod" = "ellipsis",
-        width: int = None,
-        min_width: int = None,
-        max_width: int = None,
-        ratio: int = None,
+        width: Optional[int] = None,
+        min_width: Optional[int] = None,
+        max_width: Optional[int] = None,
+        ratio: Optional[int] = None,
         no_wrap: bool = False,
     ) -> None:
         """Add a column to the table.
@@ -352,6 +352,7 @@ class Table(JupyterMixin):
             footer_style (Union[str, Style], optional): Style for the footer, or None for default. Defaults to None.
             style (Union[str, Style], optional): Style for the column cells, or None for default. Defaults to None.
             justify (JustifyMethod, optional): Alignment for cells. Defaults to "left".
+            overflow (OverflowMethod): Overflow method: "crop", "fold", "ellipsis". Defaults to "ellipsis".
             width (int, optional): Desired width of column in characters, or None to fit to contents. Defaults to None.
             min_width (Optional[int], optional): Minimum width of column, or ``None`` for no minimum. Defaults to None.
             max_width (Optional[int], optional): Maximum width of column, or ``None`` for no maximum. Defaults to None.
@@ -379,7 +380,7 @@ class Table(JupyterMixin):
     def add_row(
         self,
         *renderables: Optional["RenderableType"],
-        style: StyleType = None,
+        style: Optional[StyleType] = None,
         end_section: bool = False,
     ) -> None:
         """Add a row of renderables.
